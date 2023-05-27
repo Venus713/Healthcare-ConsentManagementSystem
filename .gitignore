@@ -102,3 +102,9 @@ dist
 
 # TernJS port file
 .tern-port
+Backend/ConsentManagement/Contracts/build
+.idea
+artifacts
+cache
+Backend/ConsentManagement/Contracts/cache
+.vscode

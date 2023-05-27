@@ -37,6 +37,7 @@ import org.web3j.protocol.core.methods.response.TransactionReceipt;
 import com.springboot.ConsentManagement.ContractModel.Contract;
 import org.web3j.protocol.http.HttpService;
 import org.web3j.tx.RawTransactionManager;
+import org.web3j.tx.TransactionManager;
 
 @Service
 public class ContractService {
@@ -86,8 +87,11 @@ public class ContractService {
 //    	Credentials receiverCredentials = WalletUtils.loadCredentials(PASSWORD, file);
 		LOGGER.info("Credentials created: address={}", credentials.getAddress());
 
-		ConsentManagementSystem contract = ConsentManagementSystem.deploy(web3j, credentials, ConsentManagementSystem.GAS_PRICE,ConsentManagementSystem.GAS_LIMIT
-				, "CMS Healthcare Company").send();
+		BigInteger chainId = BigInteger.valueOf(43113); // Set the correct chain ID (Rinkeby: 4)
+		TransactionManager transactionManager = new RawTransactionManager(web3j, credentials, chainId.longValue());
+		BigInteger gasPrice = web3j.ethGasPrice().send().getGasPrice().multiply(BigInteger.valueOf(100)); // Increase gas price
+
+		ConsentManagementSystem contract = ConsentManagementSystem.deploy(web3j, credentials, gasPrice,ConsentManagementSystem.GAS_LIMIT , "CMS Healthcare Company").send();
 		newContract.setReceiver(credentials.getAddress());
 		newContract.setAddress(contract.getContractAddress());
 		contractAddr = contract.getContractAddress();
@@ -100,9 +104,12 @@ public class ContractService {
 	}
 
 
-	public Pair<Boolean,String> AddNewUserToContract(String _user, String role) {
+	public Pair<Boolean,String> AddNewUserToContract(String _user, String role) throws IOException {
+		BigInteger chainId = BigInteger.valueOf(43113); // Set the correct chain ID (Rinkeby: 4)
+		BigInteger gasPrice = web3j.ethGasPrice().send().getGasPrice().multiply(BigInteger.valueOf(100)); // Increase gas price
+
 		ConsentManagementSystem contract = ConsentManagementSystem.load(contractAddr,
-				web3j, credentials, GAS_PRICE, BigInteger.valueOf(4372188));
+				web3j, credentials, gasPrice, ConsentManagementSystem.GAS_LIMIT);
 
 		try {
 			TransactionReceipt tr = contract.AddNewUser(_user,role).sendAsync().get(1000,TimeUnit.SECONDS);

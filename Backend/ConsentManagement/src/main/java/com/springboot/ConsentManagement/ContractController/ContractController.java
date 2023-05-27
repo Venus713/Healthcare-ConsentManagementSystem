@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.springboot.ConsentManagement.ContractModel.Contract;
 import com.springboot.ConsentManagement.ContractService.ContractService;
 
+import java.io.IOException;
 import java.util.List;
 
 @RestController
@@ -28,7 +29,7 @@ public class ContractController {
     }
 
     @PostMapping("/AddNewUser")
-    public String AddNewuser(String _user,String role) {
+    public String AddNewuser(String _user,String role) throws IOException {
         Pair<Boolean, String> res = service.AddNewUserToContract(_user,role);
         return res.getSecond();
     }

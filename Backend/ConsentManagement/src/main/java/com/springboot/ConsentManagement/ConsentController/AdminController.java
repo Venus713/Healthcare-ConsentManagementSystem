@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Set;
 
@@ -29,12 +30,12 @@ public class AdminController {
     }
 
     @PostMapping(path="/admin/AddDoc")
-    public Doctor addDoctor(@RequestBody Doctor doctor) throws IllegalAccessException {
+    public Doctor addDoctor(@RequestBody Doctor doctor) throws IllegalAccessException, IOException {
         return this.AdminServiceHandler.addDoctor(doctor);
     }
 
     @PostMapping(path="/admin/AddPat")
-    public Patient addPatient(@RequestBody Patient patient) throws IllegalAccessException {
+    public Patient addPatient(@RequestBody Patient patient) throws IllegalAccessException, IOException {
         return this.AdminServiceHandler.addPatient(patient);
     }
 

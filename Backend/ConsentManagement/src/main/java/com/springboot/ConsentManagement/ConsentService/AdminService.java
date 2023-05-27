@@ -16,14 +16,20 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 @Service
 public class AdminService {
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(ContractService.class);
 
     @Autowired
     @Qualifier("contractServiceConfiguration")
@@ -53,7 +59,7 @@ public class AdminService {
         else return true;
     }
 
-    public Doctor addDoctor(Doctor doc) throws IllegalAccessException{
+    public Doctor addDoctor(Doctor doc) throws IllegalAccessException, IOException {
         if(this.DoctorHandler.findByDoctorLicense(doc.getDoctorLicense()) != null)
             throw new IllegalAccessException("This doctor already exists");
         contractService.AddNewUserToContract(doc.getMetaId(),"doctor");
@@ -62,9 +68,11 @@ public class AdminService {
         return this.DoctorHandler.save(doc);
     }
 
-    public Patient addPatient(Patient patient) throws IllegalAccessException{
+    public Patient addPatient(Patient patient) throws IllegalAccessException, IOException {
         if(this.PatientHandler.findByAbhaId(patient.getAbhaId()) != null)
             throw new IllegalAccessException("This patient already exists");
+
+		LOGGER.error("===============user0============= {}", patient.getMetaId());
 
         contractService.AddNewUserToContract(patient.getMetaId(),"patient");
         patient.setAuthorities(assignUserAuthorities.getGrantedAuthorities(ConsentUserRole.PATIENT));
