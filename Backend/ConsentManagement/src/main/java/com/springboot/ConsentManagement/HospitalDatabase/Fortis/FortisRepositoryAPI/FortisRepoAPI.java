@@ -22,4 +22,7 @@ public interface FortisRepoAPI extends JpaRepository<FortisEHealthRecord,String>
     @Query("SELECT DISTINCT p.doctorLicense,p.doctorName FROM FortisEHealthRecord p")
     List<String> findDistinctDoctorLicenseInRepo();
 
+    FortisEHealthRecord findByEhrId(String ehrId);
+
+    HealthRecord findByPatientNameAndAbhaIdAndDoctorLicense(String name, String abhaId, String doctorLicense);
 }

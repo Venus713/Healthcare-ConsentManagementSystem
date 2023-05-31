@@ -80,6 +80,9 @@ public class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter{
 				.antMatchers("/Pat/Profile-public").permitAll()
 				.antMatchers("/Pat/**/E-Health-Records").permitAll()
 				.antMatchers("/admin/Get-AvailableHospitals").permitAll()
+				.antMatchers("/Pat/Add-E-Health-Records/**").permitAll()
+				.antMatchers("/Doc/Add-E-Health-Records/**").permitAll()
+				.antMatchers("/Doc/Update-E-Health-Records/**").permitAll()
 				.anyRequest()
 			.authenticated(); // For any request made by user, he/she has to be authenticated.
 	}

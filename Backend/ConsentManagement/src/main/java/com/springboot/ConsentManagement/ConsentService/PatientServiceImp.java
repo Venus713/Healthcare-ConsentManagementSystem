@@ -1,5 +1,6 @@
 package com.springboot.ConsentManagement.ConsentService;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -9,6 +10,7 @@ import com.springboot.ConsentManagement.ConsentDatabase.ConsentTable.Patient;
 import com.springboot.ConsentManagement.Entities.*;
 import com.springboot.ConsentManagement.HospitalFactory;
 import com.springboot.ConsentManagement.Security.AssignUserAuthorities;
+import com.springboot.ConsentManagement.Security.ConsentUserRole;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -86,4 +88,13 @@ public class PatientServiceImp implements PatientService{
 	public List<PatientPublicProfile> getRequestedPublicProfiles(List<String> patientIds) {
 		return patientIds.stream().map(id->getPublicProfile(id)).collect(Collectors.toList());
 	}
+
+	@Override
+	public HealthRecord addPatientRecord(String metaId, String hospitalName) throws IOException {
+		Patient pat = this.PatientHandler.findByMetaId(metaId);
+		HospitalService hospitalService = hospitalFactory.getHospital(hospitalName);
+		return hospitalService.addPatientEHealthRecord(pat);
+	}
+
+
 }

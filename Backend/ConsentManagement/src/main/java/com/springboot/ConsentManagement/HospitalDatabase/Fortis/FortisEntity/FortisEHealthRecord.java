@@ -7,10 +7,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.time.LocalDate;
 
 
@@ -22,7 +19,7 @@ import java.time.LocalDate;
 public class FortisEHealthRecord implements HealthRecord{
 
     @Id
-    @Column(name="ehr_id")
+    @Column(name = "ehr_id", nullable = false)
     private String ehrId;
 
     @Column(name="abha_id",nullable = false)
@@ -53,4 +50,97 @@ public class FortisEHealthRecord implements HealthRecord{
     @Column(name="doctor_license")
     private String doctorLicense;
 
+    public String getEhrId() {
+        return ehrId;
+    }
+
+    @Override
+    public void setEhrId(String id) {
+        this.ehrId = id;
+    }
+
+    public String getAbhaId() {
+        return abhaId;
+    }
+
+    public void setAbhaId(String abhaId) {
+        this.abhaId = abhaId;
+    }
+
+    public String getPatientName() {
+        return patientName;
+    }
+
+    public void setPatientName(String patientName) {
+        this.patientName = patientName;
+    }
+
+    public String getDoctorName() {
+        return doctorName;
+    }
+
+    public void setDoctorName(String doctorName) {
+        this.doctorName = doctorName;
+    }
+
+    public String getHospitalName() {
+        return hospitalName;
+    }
+
+    public void setHospitalName(String hospitalName) {
+        this.hospitalName = hospitalName;
+    }
+
+    public String getPatientPhone() {
+        return patientPhone;
+    }
+
+    public void setPatientPhone(String patientPhone) {
+        this.patientPhone = patientPhone;
+    }
+
+    public String getDiagnosis() {
+        return diagnosis;
+    }
+
+    public void setDiagnosis(String diagnosis) {
+        this.diagnosis = diagnosis;
+    }
+
+    public LocalDate getDate() {
+        return date;
+    }
+
+    public void setDate(LocalDate date) {
+        this.date = date;
+    }
+
+    public String getPrescription() {
+        return prescription;
+    }
+
+    public void setPrescription(String prescription) {
+        this.prescription = prescription;
+    }
+
+    public String getDoctorLicense() {
+        return doctorLicense;
+    }
+
+    public void setDoctorLicense(String doctorLicense) {
+        this.doctorLicense = doctorLicense;
+    }
+
+    public FortisEHealthRecord(String ehrIdId, String abhaId, String patientName, String doctorName, String hospitalName, String patientPhone, String diagnosis, LocalDate date, String prescription, String doctorLicense) {
+        this.ehrId = ehrIdId;
+        this.abhaId = abhaId;
+        this.patientName = patientName;
+        this.doctorName = doctorName;
+        this.hospitalName = hospitalName;
+        this.patientPhone = patientPhone;
+        this.diagnosis = diagnosis;
+        this.date = date;
+        this.prescription = prescription;
+        this.doctorLicense = doctorLicense;
+    }
 }

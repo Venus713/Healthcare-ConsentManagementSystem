@@ -1,5 +1,6 @@
 package com.springboot.ConsentManagement.ConsentController;
 
+import java.io.IOException;
 import java.util.List;
 
 import com.springboot.ConsentManagement.ConsentDatabase.ConsentTable.Doctor;
@@ -7,11 +8,7 @@ import com.springboot.ConsentManagement.ConsentDatabase.ConsentTable.EHealthReco
 import com.springboot.ConsentManagement.Entities.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.springboot.ConsentManagement.ConsentService.DoctorService;
 
@@ -48,6 +45,16 @@ public class DoctorController {
 	@GetMapping(path="/Doc/{metaId}/Get-Connections")
 	public List<ConnectedPatient> getConnections(@PathVariable("metaId") String metaId) {
 		return this.DoctorServiceHandler.getConnections(metaId);	
+	}
+
+	@PostMapping(path="/Doc/Add-E-Health-Records")
+	public HealthRecord addDoctor(@RequestParam("metaId") String metaId, @RequestParam("hospitalName") String hospitalName) throws IllegalAccessException, IOException {
+		return this.DoctorServiceHandler.addDoctorRecord(metaId, hospitalName);
+	}
+
+	@PostMapping(path="/Doc/Update-E-Health-Records")
+	public HealthRecord updateDocker(@RequestParam("metaId") String metaId, @RequestParam("ehrId") String ehrId, @RequestParam("hospitalName") String hospitalName) throws IllegalAccessException, IOException {
+		return (HealthRecord) this.DoctorServiceHandler.updatePatientRecord(metaId, ehrId, hospitalName);
 	}
 
 }

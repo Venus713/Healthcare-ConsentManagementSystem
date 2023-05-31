@@ -25,17 +25,17 @@ CREATE TABLE `Patient_Authorities` (
   FOREIGN KEY (`patient_meta_id`) REFERENCES `Patient` (`meta_id`),
   FOREIGN KEY (`authorities_id`) REFERENCES `Authorities` (`id`)
 );
-INSERT INTO `Patient_Authorities` VALUES
-('1234', 2),
-('3421', 2),
-('5422', 2),
-('8231', 2),
-('8989', 2),
-('1234', 4),
-('3421', 4),
-('5422', 4),
-('8231', 4),
-('8989', 4);
+-- INSERT INTO `Patient_Authorities` VALUES
+-- ('1234', 2),
+-- ('3421', 2),
+-- ('5422', 2),
+-- ('8231', 2),
+-- ('8989', 2),
+-- ('1234', 4),
+-- ('3421', 4),
+-- ('5422', 4),
+-- ('8231', 4),
+-- ('8989', 4);
 
 
 DROP TABLE IF EXISTS `Doctor_Authorities`;
@@ -47,13 +47,13 @@ CREATE TABLE `Doctor_Authorities` (
   CONSTRAINT `fk_doctor_authorities_authorities` FOREIGN KEY (`authorities_id`) REFERENCES `Authorities` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
-INSERT INTO `Doctor_Authorities` (`Doctor_meta_id`, `authorities_id`) VALUES
-  ('1290', 1),
-  ('1290', 5),
-  ('1290', 6),
-  ('1290', 7),
-  ('5663', 1),
-  ('5892', 1),
-  ('6554', 1),
-  ('9669', 1),
-  ('9669', 7);
+-- INSERT INTO `Doctor_Authorities` (`Doctor_meta_id`, `authorities_id`) VALUES
+--   ('1290', 1),
+--   ('1290', 5),
+--   ('1290', 6),
+--   ('1290', 7),
+--   ('5663', 1),
+--   ('5892', 1),
+--   ('6554', 1),
+--   ('9669', 1),
+--   ('9669', 7);

@@ -11,7 +11,6 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class HospitalFactory {
-
     @Autowired
     @Qualifier("FortisService")
     private FortisService fortisService;
@@ -25,13 +24,13 @@ public class HospitalFactory {
     private KaveryService kaveryService;
 
     public HospitalService getHospital(String name){
-        if(name.equals("Fortis")){
+        if(name.equals(FortisService.HP_NAME)){
             return fortisService;
         }
-        else if(name.equals("Narayana")){
+        else if(name.equals(NarayanaService.HP_NAME)){
             return narayanaService;
         }
-        else if(name.equals("Kavery")){
+        else if(name.equals(KaveryService.HP_NAME)){
             return kaveryService;
         }
         else return null;

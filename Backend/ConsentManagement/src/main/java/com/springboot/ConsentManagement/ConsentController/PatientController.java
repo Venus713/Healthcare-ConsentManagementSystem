@@ -1,5 +1,6 @@
 package com.springboot.ConsentManagement.ConsentController;
 
+import java.io.IOException;
 import java.util.List;
 
 import com.springboot.ConsentManagement.ConsentDatabase.ConsentTable.EHealthRecord;
@@ -7,11 +8,7 @@ import com.springboot.ConsentManagement.ConsentDatabase.ConsentTable.Patient;
 import com.springboot.ConsentManagement.Entities.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.springboot.ConsentManagement.ConsentService.PatientService;
 
@@ -48,5 +45,10 @@ public class PatientController {
 	@GetMapping(path="/Pat/{metaId}/Profile-public")
 	public PatientPublicProfile getPublicProfile(@PathVariable("metaId") String metaId) {
 		return this.PatientServiceHandler.getPublicProfile(metaId);
+	}
+
+	@PostMapping(path="/Pat/Add-E-Health-Records")
+	public HealthRecord addPatient(@RequestParam("metaId") String metaId, @RequestParam("hospitalName") String hospitalName) throws IllegalAccessException, IOException {
+		return this.PatientServiceHandler.addPatientRecord(metaId, hospitalName);
 	}
 }

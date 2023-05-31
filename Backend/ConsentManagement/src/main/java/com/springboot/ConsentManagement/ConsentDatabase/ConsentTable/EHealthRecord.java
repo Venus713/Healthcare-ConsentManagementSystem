@@ -1,9 +1,6 @@
 package com.springboot.ConsentManagement.ConsentDatabase.ConsentTable;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
@@ -13,7 +10,7 @@ import java.time.LocalDate;
 @Entity
 @Table(name="EHealth_Records")
 public class EHealthRecord {
-	
+
 	@Id
 	@Column(name="ehr_id")
 	private String ehrId;

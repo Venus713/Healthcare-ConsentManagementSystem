@@ -1,10 +1,13 @@
 package com.springboot.ConsentManagement.ConsentService;
 
+import com.springboot.ConsentManagement.ConsentDatabase.ConsentTable.Doctor;
 import com.springboot.ConsentManagement.ConsentDatabase.ConsentTable.EHealthRecord;
+import com.springboot.ConsentManagement.ConsentDatabase.ConsentTable.Patient;
 import com.springboot.ConsentManagement.Entities.HealthRecord;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
+import java.io.IOException;
 import java.util.List;
 
 public interface HospitalService {
@@ -20,4 +23,11 @@ public interface HospitalService {
 
     List<String> findDistinctDoctorLicenseInRepo();
 
+    HealthRecord addPatientEHealthRecord(Patient pat) throws IOException;
+
+    HealthRecord updateEHealthRecord(Doctor doc, String ehrId) throws IOException;
+
+    HealthRecord addDoctorEHealthRecord(Doctor doc);
+
+    HealthRecord findByPatientNameAndAbhaIdAndDoctorLicense(String name, String abhaId, String doctorLicense);
 }

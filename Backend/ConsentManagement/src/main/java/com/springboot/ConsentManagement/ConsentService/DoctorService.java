@@ -1,5 +1,6 @@
 package com.springboot.ConsentManagement.ConsentService;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -42,7 +43,7 @@ public class DoctorService {
 	public List<HealthRecord> accessRecords(String DoctorId,List<ConsentedRecords> RecordIds,List<String> hospitalNames){
 		GrantedRecords.clear();
 		this.accessGrantedRecords(DoctorId, RecordIds);
-		this.accessOwnRecords(DoctorId,hospitalNames);
+//		this.accessOwnRecords(DoctorId,hospitalNames);
 		System.out.println("Here are some records:" + GrantedRecords);
 		return GrantedRecords;
 	}
@@ -52,6 +53,7 @@ public class DoctorService {
 		Patient pat = null;
 		for(int i=0;i<RecordIds.size();i++) {
 			pat = this.PatientHandler.findByMetaId(RecordIds.get(i).getPatientId());
+			Doctor doc = this.DoctorHandler.findByMetaId(DoctorId);
 			System.out.println("Consented Records" + RecordIds.size());
 			Pair<Boolean,Boolean> res = contractService.CheckValidRecords(DoctorId,RecordIds.get(i).getRecordIds());
 			if(res.getFirst() == Boolean.TRUE && res.getSecond() == Boolean.TRUE) {
@@ -64,7 +66,8 @@ public class DoctorService {
 					System.out.println("Hospital Name is here" + hospName);
 					System.out.println("-x-x--x-x-x-x-x-x--x-x-x-x--x-x--x");
 
-					HealthRecord ConsentedRecord = hospitalFactory.getHospital(hospName).findByPatientNameAndAbhaIdAndEhrId(pat.getName(), pat.getAbhaId(),hospRecId);
+//					HealthRecord ConsentedRecord = hospitalFactory.getHospital(hospName).findByPatientNameAndAbhaIdAndEhrId(pat.getName(), pat.getAbhaId(),hospRecId);
+					HealthRecord ConsentedRecord = hospitalFactory.getHospital(hospName).findByPatientNameAndAbhaIdAndDoctorLicense(pat.getName(), pat.getAbhaId(),doc.getDoctorLicense());
 					ConsentedRecord.setEhrId("#" + hospName + "-" + hospRecId);
 					this.GrantedRecords.add(ConsentedRecord);
 
@@ -148,4 +151,21 @@ public class DoctorService {
 		return null;
 	}
 
+	public HealthRecord updatePatientRecord(String metaId, String ehrId, String hospitalName) throws IOException {
+		Doctor doc = this.DoctorHandler.findByMetaId(metaId);
+		System.out.println(doc);
+		if(doc != null) {
+			HospitalService hospitalService = hospitalFactory.getHospital(hospitalName);
+			return hospitalService.updateEHealthRecord(doc, ehrId);
+		}
+		else {
+			return null;
+		}
+	}
+
+    public HealthRecord addDoctorRecord(String metaId, String hospitalName) {
+		Doctor doc = this.DoctorHandler.findByMetaId(metaId);
+		HospitalService hospitalService = hospitalFactory.getHospital(hospitalName);
+		return hospitalService.addDoctorEHealthRecord(doc);
+    }
 }
